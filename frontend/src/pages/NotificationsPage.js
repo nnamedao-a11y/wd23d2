@@ -138,7 +138,7 @@ const NotificationsPage = () => {
         </div>
         <div className="flex items-center gap-2">
           <Funnel size={18} className="text-[#71717A]" />
-          <WhiteSelect value={typeFilter} onChange={e => setTypeFilter(e.target.value)} className="px-3 py-2 text-sm bg-white border border-[#E4E4E7] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4F46E5]">
+          <WhiteSelect value={typeFilter} onChange={e => setTypeFilter(e.target.value)}>
             <option value="all">{t('allTypesFilter')}</option>
             {notificationTypes.map(type => <option key={type} value={type}>{notificationConfig[type]?.label || type}</option>)}
           </WhiteSelect>

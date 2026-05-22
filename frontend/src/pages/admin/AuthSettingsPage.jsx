@@ -559,7 +559,6 @@ export default function AuthSettingsPage({ embedded = false }) {
             <WhiteSelect
               value={email.mode}
               onChange={(e) => setEmail({ ...email, mode: e.target.value })}
-              className="w-full px-3 py-2.5 rounded-xl border border-[#E4E4E7] text-[13px] bg-white"
               data-testid="auth-select-emailMode"
             >
               <option value="dry_run">{t('adm2_dry_run_b66359ea15') || 'dry-run (log only)'}</option>

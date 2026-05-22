@@ -259,19 +259,19 @@ export default function EmailTemplatesPage() {
               <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label className="block text-xs font-medium text-zinc-600 mb-1">{t('event')}</label>
-                  <WhiteSelect disabled={!selected._new} value={selected.event} onChange={(e) => setSelected({ ...selected, event: e.target.value })} className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-sm bg-white disabled:opacity-60">
+                  <WhiteSelect disabled={!selected._new} value={selected.event} onChange={(e) => setSelected({ ...selected, event: e.target.value })} className="w-full disabled:opacity-60">
                     {Object.entries(EVENT_META).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
                   </WhiteSelect>
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-zinc-600 mb-1">{t('adm_audience')}</label>
-                  <WhiteSelect disabled={!selected._new} value={selected.audience} onChange={(e) => setSelected({ ...selected, audience: e.target.value })} className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-sm bg-white disabled:opacity-60">
+                  <WhiteSelect disabled={!selected._new} value={selected.audience} onChange={(e) => setSelected({ ...selected, audience: e.target.value })} className="w-full disabled:opacity-60">
                     {Object.entries(AUDIENCE_LABEL).map(([k, v]) => <option key={k} value={k}>{t(v.labelKey)}</option>)}
                   </WhiteSelect>
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-zinc-600 mb-1">{t('adm_language')}</label>
-                  <WhiteSelect disabled={!selected._new} value={selected.lang} onChange={(e) => setSelected({ ...selected, lang: e.target.value })} className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-sm bg-white disabled:opacity-60">
+                  <WhiteSelect disabled={!selected._new} value={selected.lang} onChange={(e) => setSelected({ ...selected, lang: e.target.value })} className="w-full disabled:opacity-60">
                     <option value="ua">{t('adm_ua')}</option>
                     <option value="en">{t('adm_en')}</option>
                   </WhiteSelect>

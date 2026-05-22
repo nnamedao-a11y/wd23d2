@@ -91,14 +91,14 @@ export default function TeamOrdersPage() {
 
       <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-4 flex flex-wrap items-center gap-2">
         <Filter className="w-4 h-4 text-gray-400" />
-        <WhiteSelect value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white">
+        <WhiteSelect value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
           <option value="">{t('allStatuses') || t('adm3_13f8904e31')}</option>
           <option value="pending">{t('pending') || t('adm3_8c90679504')}</option>
           <option value="in_progress">{t('inWork') || t('adm3_5e747bfe62')}</option>
           <option value="completed">{t('completedStatus')}</option>
           <option value="cancelled">{t('cancelledStatus')}</option>
         </WhiteSelect>
-        <WhiteSelect value={filterManager} onChange={(e) => setFilterManager(e.target.value)} className="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white">
+        <WhiteSelect value={filterManager} onChange={(e) => setFilterManager(e.target.value)}>
           <option value="">{t('allManagers') || t('adm3_72299915d3')}</option>
           {managers.map((m) => <option key={m} value={m}>{m}</option>)}
         </WhiteSelect>
