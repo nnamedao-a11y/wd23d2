@@ -289,19 +289,17 @@ function SecurityTab() {
 
   return (
     <div className="bg-white border border-[#E4E4E7] rounded-2xl p-4 sm:p-5">
-      <div className="flex items-start gap-3 mb-4">
+      <div className="flex items-center gap-3">
         <div className="w-9 h-9 rounded-lg bg-[#18181B] text-white flex items-center justify-center shrink-0">
           <ShieldCheck size={17} weight="duotone" />
         </div>
-        <div className="min-w-0">
-          <h2 className="text-[15px] font-semibold text-[#18181B] leading-tight">
-            {t('adm3_1c25c4c013') || 'Two-factor authentication (TOTP)'}
-          </h2>
-          <p className="text-[12.5px] text-[#71717A] mt-0.5 max-w-2xl">
-            {t('adm_protect_access_to_the_admin_panel_with_onetime_tot')}
-          </p>
-        </div>
+        <h2 className="text-[15px] font-semibold text-[#18181B] leading-tight truncate">
+          {t('adm3_1c25c4c013') || 'Two-factor authentication (TOTP)'}
+        </h2>
       </div>
+      <p className="mt-2 mb-4 text-[12.5px] text-[#71717A] leading-relaxed">
+        {t('adm_protect_access_to_the_admin_panel_with_onetime_tot')}
+      </p>
 
       {status?.enabled ? (
         <div>

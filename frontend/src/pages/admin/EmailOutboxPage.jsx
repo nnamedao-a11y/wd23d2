@@ -67,61 +67,61 @@ export default function EmailOutboxPage({ embedded = false }) {
     <div className={embedded ? '' : 'p-6 max-w-[1280px] mx-auto'}>
       {/* ──────────── One unified card ──────────── */}
       <div className="bg-white border border-[#E4E4E7] rounded-2xl overflow-hidden">
-        {/* Header — title + provider chip + filter + refresh, all inline */}
+        {/* Header — title + Refresh on top row; subtext on its own row */}
         <div className="px-4 sm:px-5 py-4 border-b border-[#F4F4F5]">
-          <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
-            <div className="flex items-start gap-3 min-w-0">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
               <div className="w-9 h-9 rounded-lg bg-[#18181B] text-white flex items-center justify-center shrink-0">
                 <Mail className="w-4 h-4" />
               </div>
-              <div className="min-w-0">
-                <h2 className="text-[15px] sm:text-[16px] font-semibold text-[#18181B] leading-tight">
-                  {t('adm_email_outbox') || 'Email outbox'}
-                </h2>
-                <p className="text-[12.5px] text-[#71717A] mt-0.5 flex flex-wrap items-center gap-1.5">
-                  <span>{t('adm_provider') || 'Provider:'}</span>
-                  <span
-                    className={
-                      'inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ring-1 ' +
-                      (isLive
-                        ? 'bg-emerald-50 text-emerald-700 ring-emerald-200'
-                        : 'bg-amber-50 text-amber-700 ring-amber-200')
-                    }
-                  >
-                    {provider}
-                  </span>
-                  {!isLive && (
-                    <span className="text-[#71717A]">
-                      {t('adm3_638c49bee6') ||
-                        '— real emails are not sent. Add RESEND_API_KEY to backend/.env for production.'}
-                    </span>
-                  )}
-                </p>
-              </div>
+              <h2 className="text-[15px] sm:text-[16px] font-semibold text-[#18181B] leading-tight truncate">
+                {t('adm_email_outbox') || 'Email outbox'}
+              </h2>
             </div>
 
             <button
               onClick={load}
               data-testid="email-refresh"
-              className="inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-xl border border-[#E4E4E7] bg-white hover:bg-[#FAFAFA] text-[12.5px] font-medium text-[#18181B] focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10 shrink-0"
+              className="inline-flex items-center justify-center gap-1.5 sm:gap-2 h-9 px-3 sm:px-3.5 rounded-xl border border-[#E4E4E7] bg-white hover:bg-[#FAFAFA] text-[12.5px] font-medium text-[#18181B] focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10 shrink-0"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-              {t('adm_refresh_3') || 'Refresh'}
+              <span className="hidden xs:inline sm:inline">{t('adm_refresh_3') || 'Refresh'}</span>
             </button>
           </div>
 
-          {/* Inline filter row */}
-          <div className="flex items-center gap-2">
-            <Filter className="w-3.5 h-3.5 text-[#71717A] shrink-0" />
-            <WhiteSelect
-              value={filterEvent}
-              onChange={(e) => setFilterEvent(e.target.value)}
-              className="px-3 py-1.5 border border-[#E4E4E7] rounded-lg text-[12.5px] bg-white text-[#18181B]"
-              data-testid="email-filter-event"
+          <p className="mt-2 text-[12px] sm:text-[12.5px] text-[#71717A] leading-relaxed flex flex-wrap items-center gap-1.5">
+            <span>{t('adm_provider') || 'Provider:'}</span>
+            <span
+              className={
+                'inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ring-1 ' +
+                (isLive
+                  ? 'bg-emerald-50 text-emerald-700 ring-emerald-200'
+                  : 'bg-amber-50 text-amber-700 ring-amber-200')
+              }
             >
-              <option value="">{t('allEvents') || 'All events'}</option>
-              {events.map((e) => <option key={e} value={e}>{e}</option>)}
-            </WhiteSelect>
+              {provider}
+            </span>
+            {!isLive && (
+              <span className="text-[#71717A]">
+                {t('adm3_638c49bee6') ||
+                  '— real emails are not sent. Add RESEND_API_KEY to backend/.env for production.'}
+              </span>
+            )}
+          </p>
+
+          {/* Inline filter row */}
+          <div className="mt-3 flex items-center gap-2 flex-wrap">
+            <Filter className="w-3.5 h-3.5 text-[#71717A] shrink-0" />
+            <div className="min-w-[160px] flex-1 sm:flex-none">
+              <WhiteSelect
+                value={filterEvent}
+                onChange={(e) => setFilterEvent(e.target.value)}
+                data-testid="email-filter-event"
+              >
+                <option value="">{t('allEvents') || 'All events'}</option>
+                {events.map((e) => <option key={e} value={e}>{e}</option>)}
+              </WhiteSelect>
+            </div>
             {filterEvent && (
               <button
                 type="button"

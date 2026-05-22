@@ -288,6 +288,7 @@ const WhiteSelect = React.forwardRef(function WhiteSelect({
         aria-label={ariaLabel}
         data-testid={testId}
         className={`flex items-center justify-between gap-2 w-full min-w-0 bg-white border rounded-xl px-3.5 py-2.5 min-h-[2.75rem] text-sm text-left transition-all
+          focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10
           ${isOpen ? 'border-[#18181B] ring-2 ring-[#18181B]/10' : 'border-[#E4E4E7] hover:border-[#A1A1AA]'}
           ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
         `}

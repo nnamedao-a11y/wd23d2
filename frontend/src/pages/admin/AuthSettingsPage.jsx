@@ -46,34 +46,39 @@ const Block = ({ icon: Icon, title, description, children, onSave, saving, testI
     className="bg-white border border-[#E4E4E7] rounded-2xl p-4 sm:p-5"
     data-testid={testId}
   >
-    <div className="flex items-start justify-between gap-3 mb-4">
-      <div className="flex items-start gap-3 min-w-0">
+    {/* Header row — icon + title on the left, Save on the right.
+        The description sits BELOW this row at full width so long copy
+        doesn't get squeezed into a 60px ribbon on mobile. */}
+    <div className="flex items-center justify-between gap-3">
+      <div className="flex items-center gap-3 min-w-0">
         {Icon && (
           <div className="w-9 h-9 rounded-lg bg-[#18181B] text-white flex items-center justify-center shrink-0">
             <Icon size={17} weight="duotone" />
           </div>
         )}
-        <div className="min-w-0">
-          <h2 className="text-[15px] font-semibold text-[#18181B] leading-tight">{title}</h2>
-          {description && (
-            <p className="text-[12.5px] text-[#71717A] mt-0.5 max-w-2xl">{description}</p>
-          )}
-        </div>
+        <h2 className="text-[15px] font-semibold text-[#18181B] leading-tight truncate">
+          {title}
+        </h2>
       </div>
       {onSave && (
         <button
           type="button"
           onClick={onSave}
           disabled={saving}
-          className="shrink-0 inline-flex items-center justify-center gap-2 h-9 px-4 rounded-xl bg-[#18181B] hover:bg-[#27272A] text-white text-[12.5px] font-semibold disabled:opacity-50 transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10"
+          className="shrink-0 inline-flex items-center justify-center gap-1.5 sm:gap-2 h-9 px-3 sm:px-4 rounded-xl bg-[#18181B] hover:bg-[#27272A] text-white text-[12.5px] font-semibold disabled:opacity-50 transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10"
           data-testid={`${testId}-save`}
         >
           <FloppyDisk size={14} weight="bold" />
-          {saving ? 'Saving…' : 'Save'}
+          <span className="hidden xs:inline sm:inline">{saving ? 'Saving…' : 'Save'}</span>
         </button>
       )}
     </div>
-    <div className="space-y-4">{children}</div>
+    {description && (
+      <p className="mt-2 text-[12.5px] text-[#71717A] leading-relaxed">
+        {description}
+      </p>
+    )}
+    <div className="mt-4 space-y-4">{children}</div>
   </div>
 );
 
@@ -242,21 +247,19 @@ export default function AuthSettingsPage({ embedded = false }) {
         className="bg-white border border-[#E4E4E7] rounded-2xl p-4 sm:p-5 mb-5"
         data-testid="auth-resolved-panel"
       >
-        <div className="flex items-start gap-3 mb-3">
+        <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-[#F4F4F5] border border-[#E4E4E7] text-[#18181B] flex items-center justify-center shrink-0">
             <Info size={16} weight="duotone" />
           </div>
-          <div className="min-w-0">
-            <h2 className="text-[14px] font-semibold text-[#18181B] leading-tight">
-              {t('adm2_fallback_c34694fc28') || 'Currently effective (with fallback)'}
-            </h2>
-            <p className="text-[12px] text-[#71717A] mt-0.5">
-              Values your backend resolves at runtime — after env + DB overrides.
-            </p>
-          </div>
+          <h2 className="text-[14px] font-semibold text-[#18181B] leading-tight truncate">
+            {t('adm2_fallback_c34694fc28') || 'Currently effective (with fallback)'}
+          </h2>
         </div>
+        <p className="mt-2 text-[12px] text-[#71717A] leading-relaxed">
+          Values your backend resolves at runtime — after env + DB overrides.
+        </p>
 
-        <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-6 divide-y md:divide-y-0 divide-[#F4F4F5]">
+        <dl className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6 divide-y md:divide-y-0 divide-[#F4F4F5]">
           <EffRow
             label="baseUrl"
             value={resolved.baseUrl || '—'}
