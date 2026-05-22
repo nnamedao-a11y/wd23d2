@@ -183,10 +183,7 @@ const ReassignmentCenterPage = () => {
 
               {/* Actions */}
               <div className="flex items-center gap-3">
-                <WhiteSelect
-                  className="flex-1 px-3 py-2 border border-[#E4E4E7] rounded-xl text-sm"
-                  defaultValue={item.suggestedManagerId || ''}
-                >
+                <WhiteSelect className="flex-1" defaultValue={item.suggestedManagerId || ''}>
                   <option value="">{t('selectNewManager')}</option>
                   {managers.map(m => (
                     <option key={m._id} value={m._id}>

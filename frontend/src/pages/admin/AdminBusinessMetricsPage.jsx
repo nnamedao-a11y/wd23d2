@@ -31,32 +31,30 @@ const fmtPct = (v) =>
 
 const MetricCard = ({ icon: Icon, title, value, subtitle, color = 'indigo' }) => {
   const palette = {
-    indigo: 'bg-indigo-50 text-indigo-600 ring-indigo-100',
-    emerald: 'bg-emerald-50 text-emerald-600 ring-emerald-100',
-    amber: 'bg-amber-50 text-amber-600 ring-amber-100',
+    indigo:  'bg-[#EEF2FF] text-[#4F46E5]',
+    emerald: 'bg-emerald-50 text-emerald-600',
+    amber:   'bg-amber-50 text-amber-600',
   }[color];
   return (
     <div
-      className="bg-white rounded-2xl border border-zinc-200 p-5 shadow-sm flex items-center gap-3.5 min-w-0"
+      className="bg-white rounded-2xl border border-[#E4E4E7] p-4 sm:p-5 flex items-center gap-3 min-w-0"
       data-testid={`metric-card-${color}`}
     >
-      <div
-        className={`p-2.5 rounded-xl ring-1 ${palette} flex-shrink-0`}
-      >
-        <Icon size={22} weight="bold" />
+      <div className={`w-10 h-10 rounded-xl ${palette} flex items-center justify-center flex-shrink-0`}>
+        <Icon size={20} weight="bold" />
       </div>
       <div className="min-w-0 flex-1">
         <h3
-          className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight leading-none"
+          className="text-[20px] sm:text-[24px] font-bold text-[#18181B] tracking-tight leading-none tabular-nums"
           data-testid={`metric-value-${color}`}
         >
           {value}
         </h3>
-        <p className="text-xs sm:text-sm font-medium text-zinc-600 mt-1.5 truncate">
+        <p className="text-[11.5px] sm:text-[12.5px] font-medium text-[#52525B] mt-1 truncate">
           {title}
         </p>
         {subtitle && (
-          <p className="text-[11px] sm:text-xs text-zinc-400 mt-0.5 truncate">
+          <p className="text-[10.5px] sm:text-[11px] text-[#A1A1AA] mt-0.5 truncate">
             {subtitle}
           </p>
         )}
@@ -66,9 +64,9 @@ const MetricCard = ({ icon: Icon, title, value, subtitle, color = 'indigo' }) =>
 };
 
 const FormulaCard = ({ title, body }) => (
-  <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4 text-xs text-zinc-600 leading-relaxed min-w-0">
-    <div className="font-semibold text-zinc-800 mb-1.5">{title}</div>
-    <div className="text-zinc-500">{body}</div>
+  <div className="bg-[#FAFAFA] border border-[#E4E4E7] rounded-xl p-3.5 text-[11.5px] text-[#52525B] leading-relaxed min-w-0">
+    <div className="font-semibold text-[#18181B] mb-1">{title}</div>
+    <div className="text-[#71717A]">{body}</div>
   </div>
 );
 
@@ -123,11 +121,11 @@ export default function AdminBusinessMetricsPage() {
             <button
               onClick={fetchMetrics}
               disabled={loading}
-              className="inline-flex items-center gap-1.5 px-3 sm:px-4 h-10 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-xs sm:text-sm font-medium text-zinc-700 disabled:opacity-50 whitespace-nowrap shadow-sm"
+              className="inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-xl bg-[#18181B] hover:bg-[#27272A] text-white text-[12.5px] font-semibold disabled:opacity-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10"
               data-testid="metrics-refresh-btn"
               aria-label={t('adm_refresh_3')}
             >
-              <ArrowClockwise size={16} className={loading ? 'animate-spin' : ''} />
+              <ArrowClockwise size={14} className={loading ? 'animate-spin' : ''} />
               <span className="hidden sm:inline">{t('adm_refresh_3')}</span>
             </button>
           }

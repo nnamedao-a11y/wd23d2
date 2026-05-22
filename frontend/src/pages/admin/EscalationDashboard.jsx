@@ -13,6 +13,7 @@ import {
   Zap,
   Shield,
 } from 'lucide-react';
+import { AdminPageHeader } from '../../components/ui/AdminPagePrimitives';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -168,35 +169,25 @@ export default function EscalationDashboard() {
   }
 
   return (
-    <div className="space-y-6" data-testid="escalation-dashboard">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-red-100 rounded-lg">
-            <Zap className="w-6 h-6 text-red-600" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              {lang === 'uk' ? t('adm2_e8eddbb096') : lang === 'bg' ? t('adm2_f9bcbd6af6') : 'Escalations'}
-            </h1>
-            <p className="text-sm text-gray-500">
-              {lang === 'uk' ? t('adm2_7e27d05d7e') : lang === 'bg' ? t('adm2_c72364866f') : 'Team reaction control'}
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
+    <div className="space-y-4 sm:space-y-5" data-testid="escalation-dashboard">
+      <AdminPageHeader
+        icon={Zap}
+        title={lang === 'uk' ? t('adm2_e8eddbb096') : lang === 'bg' ? t('adm2_f9bcbd6af6') : 'Escalations'}
+        subtitle={lang === 'uk' ? t('adm2_7e27d05d7e') : lang === 'bg' ? t('adm2_c72364866f') : 'Team reaction control'}
+        testId="escalation-header"
+        actions={(
           <button
             onClick={triggerManualProcess}
-            className="flex items-center gap-2 px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+            className="inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-xl bg-[#18181B] hover:bg-[#27272A] text-white text-[12.5px] font-semibold focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10"
           >
-            <RefreshCw className="w-4 h-4" />
-            {lang === 'uk' ? t('adm2_b6bf91f845') : 'Refresh'}
+            <RefreshCw className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">{lang === 'uk' ? t('adm2_b6bf91f845') : 'Refresh'}</span>
           </button>
-        </div>
-      </div>
+        )}
+      />
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
         <StatsCard
           title={lang === 'uk' ? t('adm2_d2ae4c4732') : 'Manager'}
           count={stats.managerPending}

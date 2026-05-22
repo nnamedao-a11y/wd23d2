@@ -203,12 +203,7 @@ const OwnerPaymentDashboard = () => {
           <p className="text-sm text-[#71717A] mt-1">{t('adm_financial_activity_overview')}</p>
         </div>
         <div className="flex items-center gap-4">
-          <WhiteSelect
-            value={period}
-            onChange={(e) => setPeriod(Number(e.target.value))}
-            className="px-4 py-2 bg-white border border-[#E4E4E7] rounded-xl text-sm focus:ring-2 focus:ring-[#18181B]"
-            data-testid="period-select"
-          >
+          <WhiteSelect value={period} onChange={(e) => setPeriod(Number(e.target.value))} data-testid="period-select">
             <option value={7}>{t('adm_7_days')}</option>
             <option value={14}>{t('adm_14_days')}</option>
             <option value={30}>{t('adm_30_days')}</option>

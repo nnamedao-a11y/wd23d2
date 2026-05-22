@@ -32,6 +32,11 @@ import {
 } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import {
+  AdminPageHeader,
+} from '../components/ui/AdminPagePrimitives';
+import SectionTabs from '../components/ui/SectionTabs';
+
 const UserEngagementPage = () => {
   const { t } = useLang();
   const [activeTab, setActiveTab] = useState('vehicles');
@@ -167,25 +172,21 @@ const UserEngagementPage = () => {
   }
 
   return (
-    <div className="space-y-4 md:space-y-6" data-testid="user-engagement-page">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Lightning className="w-5 h-5 md:w-6 md:h-6 text-amber-500 flex-shrink-0" weight="fill" />
-            <span>{t('adm_user_engagement_control')}</span>
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">
-            {t('adm_mass_mailings_and_analytics_for_favoritescompare')}
-          </p>
-        </div>
-        <button
-          onClick={fetchData}
-          className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors whitespace-nowrap self-start sm:self-auto"
-        >
-          {t('adm_refresh_3')}
-        </button>
-      </div>
+    <div className="space-y-4 sm:space-y-5" data-testid="user-engagement-page">
+      <AdminPageHeader
+        icon={Lightning}
+        title={t('adm_user_engagement_control')}
+        subtitle={t('adm_mass_mailings_and_analytics_for_favoritescompare')}
+        testId="engagement-header"
+        actions={(
+          <button
+            onClick={fetchData}
+            className="inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-xl bg-[#18181B] hover:bg-[#27272A] text-white text-[12.5px] font-semibold focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10"
+          >
+            {t('adm_refresh_3')}
+          </button>
+        )}
+      />
 
       {/* Stats Cards */}
       {analytics && (
@@ -275,25 +276,15 @@ const UserEngagementPage = () => {
         )}
       </div>
 
-      {/* Tabs */}
-      <div className="flex overflow-x-auto border-b border-gray-200 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide">
-        <div className="flex gap-1 min-w-max">
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-3 md:px-4 py-3 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-                activeTab === tab.id
-                  ? 'border-purple-500 text-purple-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              <tab.icon className="w-4 h-4 flex-shrink-0" />
-              <span>{tab.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+      {/* Tabs — unified black-outline */}
+      <SectionTabs
+        tabs={tabs.map(t2 => ({ id: t2.id, label: t2.label, icon: t2.icon }))}
+        activeId={activeTab}
+        onChange={setActiveTab}
+        testIdPrefix="engagement-tab"
+        ariaLabel="Engagement sections"
+        className="-mx-1 sm:mx-0"
+      />
 
       {/* Tab Content */}
       <AnimatePresence mode="wait">

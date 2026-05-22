@@ -36,12 +36,7 @@ export default function CalculationsTab({ deals = [] }) {
         <Wallet size={18} weight="duotone" className="text-[#4F46E5]" />
         <label className="text-xs uppercase font-semibold tracking-wider text-[#71717A]">{t('cmp_deal')}</label>
         <div className="relative flex-1">
-          <WhiteSelect
-            value={selectedDealId}
-            onChange={(e) => setSelectedDealId(e.target.value)}
-            className="w-full appearance-none px-3 py-1.5 pr-8 border border-[#D4D4D8] rounded text-sm bg-white"
-            data-testid="calc-tab-deal-select"
-          >
+          <WhiteSelect value={selectedDealId} onChange={(e) => setSelectedDealId(e.target.value)} className="w-full" data-testid="calc-tab-deal-select">
             {!allDeals.length && <option value="">{t('cmp_no_deals_available')}</option>}
             {allDeals.map(d => (
               <option key={d.id} value={d.id}>

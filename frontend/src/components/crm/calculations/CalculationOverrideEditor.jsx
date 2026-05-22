@@ -227,15 +227,11 @@ export default function CalculationOverrideEditor({ calc, onChange }) {
             <input placeholder={t('cmp_value')}   type="number" value={newRow.value}
                    onChange={(e) => setNewRow({ ...newRow, value: e.target.value })}
                    className="px-2 py-1.5 border border-[#D4D4D8] rounded text-sm text-right" />
-            <WhiteSelect value={newRow.currency}
-                    onChange={(e) => setNewRow({ ...newRow, currency: e.target.value })}
-                    className="px-2 py-1.5 border border-[#D4D4D8] rounded text-sm">
+            <WhiteSelect value={newRow.currency} onChange={(e) => setNewRow({ ...newRow, currency: e.target.value })}>
               <option value="EUR">{t('cmp_eur')}</option>
               <option value="USD">{t('cmp_usd')}</option>
             </WhiteSelect>
-            <WhiteSelect value={newRow.visibility}
-                    onChange={(e) => setNewRow({ ...newRow, visibility: e.target.value })}
-                    className="px-2 py-1.5 border border-[#D4D4D8] rounded text-sm">
+            <WhiteSelect value={newRow.visibility} onChange={(e) => setNewRow({ ...newRow, visibility: e.target.value })}>
               <option value="client">{t('cmp_visible_to_client')}</option>
               <option value="manager">{t('cmp_manager_only')}</option>
               <option value="admin_only">{t('cmp_admin_only')}</option>

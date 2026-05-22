@@ -114,16 +114,7 @@ const ParserLogs = () => {
       {/* Filters - Mobile responsive */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
         <Funnel size={18} className="text-[#71717A]" />
-        <WhiteSelect
-          value={filters.source}
-          onChange={(e) => {
-            setFilters({ ...filters, source: e.target.value });
-            setPagination(prev => ({ ...prev, page: 1 }));
-          }}
-          className="flex-1 sm:flex-none min-w-[140px] px-4 py-2.5 bg-white border border-[#E4E4E7] rounded-xl focus:outline-none focus:border-[#18181B] focus:ring-1 focus:ring-[#18181B] text-[#18181B] cursor-pointer appearance-none"
-          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '40px' }}
-          data-testid="source-filter"
-        >
+        <WhiteSelect value={filters.source} onChange={(e) => { setFilters({ ...filters, source: e.target.value }); setPagination(prev => ({ ...prev, page: 1 })); }} className="flex-1 min-w-[140px]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '40px' }} data-testid="source-filter">
           <option value="">{t('allSources')}</option>
           <option value="bitmotors">{t('adm_bitmotors')}</option>
           <option value="westmotors">{t('adm_westmotors')}</option>
@@ -135,16 +126,7 @@ const ParserLogs = () => {
           <option value="salvagebid">{t('adm_salvagebid')}</option>
           <option value="system">{t('adm_system')}</option>
         </WhiteSelect>
-        <WhiteSelect
-          value={filters.level}
-          onChange={(e) => {
-            setFilters({ ...filters, level: e.target.value });
-            setPagination(prev => ({ ...prev, page: 1 }));
-          }}
-          className="flex-1 sm:flex-none min-w-[140px] px-4 py-2.5 bg-white border border-[#E4E4E7] rounded-xl focus:outline-none focus:border-[#18181B] focus:ring-1 focus:ring-[#18181B] text-[#18181B] cursor-pointer appearance-none"
-          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '40px' }}
-          data-testid="level-filter"
-        >
+        <WhiteSelect value={filters.level} onChange={(e) => { setFilters({ ...filters, level: e.target.value }); setPagination(prev => ({ ...prev, page: 1 })); }} className="flex-1 min-w-[140px]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '40px' }} data-testid="level-filter">
           <option value="">{t('allStatuses')}</option>
           <option value="info">{t('adm_info')}</option>
           <option value="warn">{t('adm_warning')}</option>

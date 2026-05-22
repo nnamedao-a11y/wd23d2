@@ -34,6 +34,7 @@ import {
 // matches the design system used across catalog/admin filters).
 import WhiteSelect from '../../components/ui/WhiteSelect';
 import { ChevronDown } from 'lucide-react';
+import { AdminPageHeader } from '../../components/ui/AdminPagePrimitives';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -248,51 +249,49 @@ export default function AdminPaymentsPage() {
   const dailyMax = useMemo(() => Math.max(1, ...(stats?.daily || []).map(d => d.amount || 0)), [stats]);
 
   return (
-    <div className="space-y-5 sm:space-y-6">
-      {/* Header — title left, Days select + Sync + CSV right; on mobile the actions wrap onto a second row */}
-      <div className="flex flex-col gap-4">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <CreditCard className="w-6 h-6 sm:w-7 sm:h-7 text-[#635BFF]" />
-            {t('paymentsTitle')}
-          </h1>
-          <p className="text-xs sm:text-sm text-gray-500 mt-1.5 leading-relaxed">{t('masterAdminView')}</p>
-        </div>
-        <div className="flex items-stretch gap-2 flex-wrap">
-          <div className="min-w-[160px]">
-            <WhiteSelect
-              value={String(appliedFilters.days)}
-              onChange={(e) => {
-                const days = Number(e.target.value);
-                setDraftFilters((f) => ({ ...f, days }));
-                setAppliedFilters((f) => ({ ...f, days }));
-              }}
-              data-testid="payments-days-select"
+    <div className="space-y-4 sm:space-y-5">
+      <AdminPageHeader
+        icon={CreditCard}
+        title={t('paymentsTitle')}
+        subtitle={t('masterAdminView')}
+        testId="payments-header"
+        actions={(
+          <>
+            <div className="w-[160px] shrink-0">
+              <WhiteSelect
+                value={String(appliedFilters.days)}
+                onChange={(e) => {
+                  const days = Number(e.target.value);
+                  setDraftFilters((f) => ({ ...f, days }));
+                  setAppliedFilters((f) => ({ ...f, days }));
+                }}
+                data-testid="payments-days-select"
+              >
+                <option value="7">{t('last7Days')}</option>
+                <option value="30">{t('last30Days')}</option>
+                <option value="90">{t('last90Days')}</option>
+                <option value="365">{t('lastYear')}</option>
+                <option value="3650">{t('allTime')}</option>
+              </WhiteSelect>
+            </div>
+            <button
+              onClick={handleSync}
+              disabled={syncing}
+              className="inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-xl bg-[#18181B] hover:bg-[#27272A] text-white text-[12.5px] font-semibold disabled:opacity-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10"
             >
-              <option value="7">{t('last7Days')}</option>
-              <option value="30">{t('last30Days')}</option>
-              <option value="90">{t('last90Days')}</option>
-              <option value="365">{t('lastYear')}</option>
-              <option value="3650">{t('allTime')}</option>
-            </WhiteSelect>
-          </div>
-          <button
-            onClick={handleSync}
-            disabled={syncing}
-            className="inline-flex items-center justify-center gap-1.5 h-10 px-4 bg-[#635BFF] text-white rounded-lg hover:bg-[#5147d4] disabled:opacity-50 text-sm font-medium whitespace-nowrap shadow-sm"
-          >
-            <RefreshCw className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
-            <span className="whitespace-nowrap">{t('syncFromStripe')}</span>
-          </button>
-          <button
-            onClick={exportCsv}
-            className="inline-flex items-center justify-center gap-1.5 h-10 px-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 text-sm whitespace-nowrap"
-          >
-            <Download className="w-4 h-4" />
-            CSV
-          </button>
-        </div>
-      </div>
+              <RefreshCw className={`w-3.5 h-3.5 ${syncing ? 'animate-spin' : ''}`} />
+              <span className="hidden sm:inline">{t('syncFromStripe')}</span>
+            </button>
+            <button
+              onClick={exportCsv}
+              className="inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-xl border border-[#E4E4E7] bg-white hover:bg-[#FAFAFA] text-[12.5px] font-medium text-[#18181B] focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10"
+            >
+              <Download className="w-3.5 h-3.5" />
+              CSV
+            </button>
+          </>
+        )}
+      />
 
       {/* KPI Cards — identical templates, equal height via h-full on each card */}
       {stats && (

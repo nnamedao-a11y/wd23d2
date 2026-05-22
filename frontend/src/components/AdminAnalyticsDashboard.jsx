@@ -341,11 +341,7 @@ const AdminAnalyticsDashboard = () => {
           <p className="text-sm text-gray-500 mt-1">{t('i18n_marketing_performance_and_roi_ab828b')}</p>
         </div>
         <div className="flex items-center gap-3">
-          <WhiteSelect
-            value={days}
-            onChange={(e) => setDays(Number(e.target.value))}
-            className="px-4 py-2 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500"
-          >
+          <WhiteSelect value={days} onChange={(e) => setDays(Number(e.target.value))}>
             <option value={7}>{t('i18n_last_7_days_79531d')}</option>
             <option value={14}>{t('i18n_last_14_days_a937d9')}</option>
             <option value={30}>{t('i18n_last_30_days_f5c99e')}</option>

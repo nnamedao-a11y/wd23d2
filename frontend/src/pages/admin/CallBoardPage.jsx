@@ -123,14 +123,7 @@ const CallCard = ({ session, onUpdateStatus, onScheduleCallback, loading }) => {
       <div className="flex items-center gap-2 pt-3 border-t border-zinc-100">
         {session.status !== 'deal' && session.status !== 'rejected' && (
           <>
-            <WhiteSelect
-              onChange={(e) => onUpdateStatus(session.id, e.target.value)}
-              value=""
-              disabled={loading}
-              className="flex-1 px-3 py-2 rounded-lg border border-zinc-200 text-sm 
-                         focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 outline-none"
-              data-testid={`status-select-${session.id}`}
-            >
+            <WhiteSelect onChange={(e) => onUpdateStatus(session.id, e.target.value)} value="" disabled={loading} className="flex-1" data-testid={`status-select-${session.id}`}>
               <option value="" disabled>{t('adm_change_status')}</option>
               {Object.entries(CALL_STATUSES).map(([key, val]) => (
                 <option key={key} value={key}>{val.label}</option>

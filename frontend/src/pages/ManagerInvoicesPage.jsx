@@ -225,12 +225,7 @@ function CreateInvoiceModal({ open, onClose, customers, services, onCreated }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
               <label className="block text-xs font-medium text-zinc-600 mb-1">{t('adm_customer_3')}</label>
-              <WhiteSelect
-                value={customerId}
-                onChange={(e) => setCustomerId(e.target.value)}
-                className="w-full px-3 py-2 border border-zinc-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-[#635BFF]/20 focus:border-[#635BFF]"
-                data-testid="invoice-customer-select"
-              >
+              <WhiteSelect value={customerId} onChange={(e) => setCustomerId(e.target.value)} className="w-full" data-testid="invoice-customer-select">
                 <option value="">{t('adm_select_customer_2')}</option>
                 {customers.map((c) => (
                   <option key={c.id} value={c.id}>
@@ -242,11 +237,7 @@ function CreateInvoiceModal({ open, onClose, customers, services, onCreated }) {
             </div>
             <div>
               <label className="block text-xs font-medium text-zinc-600 mb-1">{t('adm_currency')}</label>
-              <WhiteSelect
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-                className="w-full px-3 py-2 border border-zinc-300 rounded-lg text-sm bg-white"
-              >
+              <WhiteSelect value={currency} onChange={(e) => setCurrency(e.target.value)} className="w-full">
                 {['USD', 'EUR', 'UAH', 'BGN', 'GBP'].map((c) => (
                   <option key={c}>{c}</option>
                 ))}
@@ -798,12 +789,7 @@ export default function ManagerInvoicesPage() {
           />
         </div>
         <Filter className="w-4 h-4 text-zinc-400" />
-        <WhiteSelect
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="px-3 py-2 border border-zinc-200 rounded-lg text-sm bg-white"
-          data-testid="invoice-filter"
-        >
+        <WhiteSelect value={filter} onChange={(e) => setFilter(e.target.value)} data-testid="invoice-filter">
           <option value="all">{t('adm_all_statuses')}</option>
           <option value="draft">{t('adm_drafts')}</option>
           <option value="sent">{t('adm_sent_4')}</option>

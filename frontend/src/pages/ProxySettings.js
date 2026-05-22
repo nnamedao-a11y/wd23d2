@@ -276,11 +276,7 @@ const ProxySettings = () => {
                 {/* Protocol */}
                 <div>
                   <label className="block text-sm font-medium text-[#18181B] mb-2">{t('adm_protocol')}</label>
-                  <WhiteSelect
-                    value={newProxy.protocol}
-                    onChange={e => setNewProxy({ ...newProxy, protocol: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-[#F4F4F5] border-0 rounded-lg text-sm focus:ring-2 focus:ring-[#0A0A0B] outline-none"
-                  >
+                  <WhiteSelect value={newProxy.protocol} onChange={e => setNewProxy({ ...newProxy, protocol: e.target.value })} className="w-full">
                     <option value="http">HTTP</option>
                     <option value="https">HTTPS</option>
                     <option value="socks5">{t('adm_socks5')}</option>
@@ -435,11 +431,7 @@ const ProxySettings = () => {
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      <WhiteSelect
-                        value={proxy.priority}
-                        onChange={e => handleSetPriority(proxy.id, parseInt(e.target.value))}
-                        className="text-sm bg-[#F4F4F5] px-2 py-1 rounded border-0 focus:ring-1 focus:ring-[#0A0A0B]"
-                      >
+                      <WhiteSelect value={proxy.priority} onChange={e => handleSetPriority(proxy.id, parseInt(e.target.value))}>
                         {[1,2,3,4,5,6,7,8,9,10].map(p => (
                           <option key={p} value={p}>{p}</option>
                         ))}

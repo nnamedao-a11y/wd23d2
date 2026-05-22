@@ -28,6 +28,7 @@ import {
   Robot,
   Lightning,
 } from '@phosphor-icons/react';
+import { AdminPageHeader } from '../../components/ui/AdminPagePrimitives';
 
 const API_URL =
   process.env.REACT_APP_BACKEND_URL ||
@@ -177,40 +178,30 @@ export default function ExceptionsDashboardPage() {
   const itemsToShow = activeBucket === 'all' ? allItems : buckets[activeBucket] || [];
 
   return (
-    <div className="space-y-4 sm:space-y-6" data-testid="exceptions-dashboard">
-      {/* ── Page header ───────────────────────────────────────── */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-        <div className="flex items-start gap-3 min-w-0 flex-1">
-          <div className="p-2 rounded-xl bg-[#FEF3C7] shrink-0">
-            <Warning size={18} weight="fill" className="text-[#B45309]" />
-          </div>
-          <div className="min-w-0">
-            <h1
-              className="text-xl sm:text-2xl md:text-3xl font-bold text-[#18181B] leading-tight"
-              style={{ fontFamily: 'Mazzard, Mazzard H, Mazzard M, system-ui, sans-serif' }}
+    <div className="space-y-4 sm:space-y-5" data-testid="exceptions-dashboard">
+      <AdminPageHeader
+        icon={Warning}
+        title={t('exceptionsDashboardTitle')}
+        subtitle={t('adm_shipments_requiring_manual_intervention')}
+        testId="exceptions-header"
+        actions={(
+          <>
+            {data?.computedAt && (
+              <span className="text-[11px] text-[#A1A1AA] tabular-nums whitespace-nowrap">
+                {new Date(data.computedAt).toLocaleTimeString(getLocale())}
+              </span>
+            )}
+            <button
+              onClick={reload}
+              disabled={loading}
+              className="inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-xl bg-[#18181B] hover:bg-[#27272A] text-white text-[12.5px] font-semibold disabled:opacity-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10"
             >
-              {t('exceptionsDashboardTitle')}
-            </h1>
-            <p className="mt-1 text-[12px] sm:text-sm text-[#71717A] leading-relaxed">
-              {t('adm_shipments_requiring_manual_intervention')}
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 shrink-0">
-          {data?.computedAt && (
-            <span className="text-[11px] sm:text-xs text-[#A1A1AA] font-mono whitespace-nowrap">
-              {new Date(data.computedAt).toLocaleTimeString(getLocale())}
-            </span>
-          )}
-          <button
-            onClick={reload}
-            disabled={loading}
-            className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl border border-[#E4E4E7] bg-white text-xs font-medium text-[#18181B] hover:bg-zinc-50 transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10"
-          >
-            <ArrowClockwise size={13} className={loading ? 'animate-spin' : ''} /> <span className="hidden sm:inline">{t('adm_refresh_3')}</span>
-          </button>
-        </div>
-      </div>
+              <ArrowClockwise size={14} className={loading ? 'animate-spin' : ''} />
+              <span className="hidden sm:inline">{t('adm_refresh_3')}</span>
+            </button>
+          </>
+        )}
+      />
 
       {/* Bucket selector chips — 2 cols mobile, wrap row on sm+ */}
       <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">

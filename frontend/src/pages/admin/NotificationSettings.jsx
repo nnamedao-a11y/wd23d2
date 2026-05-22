@@ -275,11 +275,7 @@ export default function NotificationSettings() {
               {rule.channels.sound && (
                 <div className="mt-4 pt-4 border-t border-zinc-100">
                   <label className="text-sm text-zinc-500 block mb-2">{t('soundKey') || 'Sound'}</label>
-                  <WhiteSelect
-                    value={rule.soundKey || 'alert'}
-                    onChange={(e) => updateRule(rule.eventType, { soundKey: e.target.value })}
-                    className="px-3 py-2 rounded-xl border border-zinc-200 text-sm"
-                  >
+                  <WhiteSelect value={rule.soundKey || 'alert'} onChange={(e) => updateRule(rule.eventType, { soundKey: e.target.value })}>
                     <option value="lead">{t('adm_lead')}</option>
                     <option value="payment">{t('adm_payment_2')}</option>
                     <option value="shipment">{t('adm_shipment')}</option>

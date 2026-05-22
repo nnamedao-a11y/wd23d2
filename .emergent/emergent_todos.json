@@ -1,22 +1,42 @@
 [
   {
-    "content": "Redesign SystemPage header & tabs (clean segmented control, consistent palette, no thick yellow border)",
+    "content": "Create reusable AdminPageHeader & AdminCard primitives",
     "status": "completed"
   },
   {
-    "content": "AdminSettingsPage (General/CRM): convert Lead-status & Deal-status chip palettes into compact collapsible dropdown lists",
+    "content": "Refactor JourneyPage — 30 days select fix + mobile adaptive",
     "status": "completed"
   },
   {
-    "content": "AuthSettingsPage: recompose effective-values panel (denser, no double palette), tighten block spacing, consistent palette",
+    "content": "Refactor RiskDashboardPage",
     "status": "completed"
   },
   {
-    "content": "EmailOutboxPage: flatten triple-nested cards (provider banner + filter card + table card) into one unified panel",
+    "content": "Refactor AdminBusinessMetricsPage",
     "status": "completed"
   },
   {
-    "content": "Verify build and screenshot all 3 tabs on mobile + desktop",
+    "content": "Refactor UserEngagementPage",
+    "status": "completed"
+  },
+  {
+    "content": "Refactor ContractsAccountingPage",
+    "status": "completed"
+  },
+  {
+    "content": "Refactor AdminPaymentsPage",
+    "status": "completed"
+  },
+  {
+    "content": "Refactor EscalationDashboard / KPIDashboard / SourceHealthDashboard / ExceptionsDashboard",
+    "status": "completed"
+  },
+  {
+    "content": "Sweep all WhiteSelect className anti-patterns across codebase (17 fixed)",
+    "status": "completed"
+  },
+  {
+    "content": "Validate via screenshots on 480px & 360px (all clean)",
     "status": "completed"
   }
 ]

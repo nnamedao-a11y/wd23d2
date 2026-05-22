@@ -125,11 +125,7 @@ const TeamManagersPage = () => {
             className="w-full pl-10 pr-4 py-2.5 border border-[#E4E4E7] rounded-xl focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent"
           />
         </div>
-        <WhiteSelect
-          value={sortBy}
-          onChange={e => setSortBy(e.target.value)}
-          className="px-4 py-2.5 border border-[#E4E4E7] rounded-xl focus:ring-2 focus:ring-[#4F46E5]"
-        >
+        <WhiteSelect value={sortBy} onChange={e => setSortBy(e.target.value)}>
           <option value="performanceScore">{t('byRating')}</option>
           <option value="activeLeads">{t('byLeads')}</option>
           <option value="overdueTasks">{t('byOverdue')}</option>

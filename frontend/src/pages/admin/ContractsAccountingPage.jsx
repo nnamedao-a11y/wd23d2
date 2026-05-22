@@ -26,6 +26,10 @@ import {
   FileText,
 } from 'lucide-react';
 import WhiteSelect from '../../components/ui/WhiteSelect';
+import {
+  AdminPageHeader,
+  AdminCard,
+} from '../../components/ui/AdminPagePrimitives';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -124,65 +128,51 @@ export default function ContractsAccountingPage() {
   const priceStats = data?.priceStats || {};
 
   return (
-    <div className="space-y-6" data-testid="contracts-accounting-page">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-indigo-100 rounded-lg">
-            <FileSignature className="w-6 h-6 text-indigo-600" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              {lang === 'uk' ? t('adm2_48f16e3532') : lang === 'bg' ? t('adm2_ae67832aaf') : 'Contracts Accounting'}
-            </h1>
-            <p className="text-sm text-gray-500">
-              {lang === 'uk' ? t('adm2_bfa494e8c3') : 'Signature control & statistics'}
-            </p>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-3">
-          {/* Period Filter */}
-          <WhiteSelect
-            value={period}
-            onChange={(e) => setPeriod(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"
-          >
-            <option value="7">7 {lang === 'uk' ? t('adm2_e85d4cee49') : 'days'}</option>
-            <option value="30">30 {lang === 'uk' ? t('adm2_e85d4cee49') : 'days'}</option>
-            <option value="90">90 {lang === 'uk' ? t('adm2_e85d4cee49') : 'days'}</option>
-          </WhiteSelect>
-          
-          {/* Status Filter */}
-          <WhiteSelect
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"
-          >
-            <option value="">{lang === 'uk' ? t('adm2_602a3f7399') : 'All statuses'}</option>
-            <option value="signed">{lang === 'uk' ? t('adm2_d9fbeffdf6') : 'Signed'}</option>
-            <option value="sent">{lang === 'uk' ? t('adm2_cecde526be') : 'Pending'}</option>
-            <option value="rejected">{lang === 'uk' ? t('adm2_49c59ac5d0') : 'Rejected'}</option>
-          </WhiteSelect>
-          
-          {/* Export Button */}
-          <button
-            onClick={handleExport}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition text-sm"
-          >
-            <Download className="w-4 h-4" />
-            {lang === 'uk' ? t('adm2_b51156b39b') : 'Export'}
-          </button>
-          
-          {/* Refresh */}
-          <button
-            onClick={fetchData}
-            className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
-          >
-            <RefreshCw className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
+    <div className="space-y-4 sm:space-y-5" data-testid="contracts-accounting-page">
+      <AdminPageHeader
+        icon={FileSignature}
+        title={lang === 'uk' ? t('adm2_48f16e3532') : lang === 'bg' ? t('adm2_ae67832aaf') : 'Contracts accounting'}
+        subtitle={lang === 'uk' ? t('adm2_bfa494e8c3') : 'Signature control & statistics'}
+        testId="contracts-header"
+        actions={(
+          <>
+            <div className="w-[120px] shrink-0">
+              <WhiteSelect
+                value={period}
+                onChange={(e) => setPeriod(e.target.value)}
+              >
+                <option value="7">7 {lang === 'uk' ? t('adm2_e85d4cee49') : 'days'}</option>
+                <option value="30">30 {lang === 'uk' ? t('adm2_e85d4cee49') : 'days'}</option>
+                <option value="90">90 {lang === 'uk' ? t('adm2_e85d4cee49') : 'days'}</option>
+              </WhiteSelect>
+            </div>
+            <div className="w-[150px] shrink-0">
+              <WhiteSelect
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                <option value="">{lang === 'uk' ? t('adm2_602a3f7399') : 'All statuses'}</option>
+                <option value="signed">{lang === 'uk' ? t('adm2_d9fbeffdf6') : 'Signed'}</option>
+                <option value="sent">{lang === 'uk' ? t('adm2_cecde526be') : 'Pending'}</option>
+                <option value="rejected">{lang === 'uk' ? t('adm2_49c59ac5d0') : 'Rejected'}</option>
+              </WhiteSelect>
+            </div>
+            <button
+              onClick={handleExport}
+              className="inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-xl border border-[#E4E4E7] bg-white hover:bg-[#FAFAFA] text-[12.5px] font-medium text-[#18181B] focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">{lang === 'uk' ? t('adm2_b51156b39b') : 'Export'}</span>
+            </button>
+            <button
+              onClick={fetchData}
+              className="inline-flex items-center justify-center h-9 w-9 sm:w-auto sm:px-3.5 rounded-xl bg-[#18181B] hover:bg-[#27272A] text-white text-[12.5px] font-semibold focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+            </button>
+          </>
+        )}
+      />
 
       {/* Summary Stats */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
