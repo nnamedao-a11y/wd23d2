@@ -1,0 +1,34 @@
+[
+  {
+    "content": "Backup current /app .env files (MONGO_URL, REACT_APP_BACKEND_URL)",
+    "status": "completed"
+  },
+  {
+    "content": "Copy repo files into /app (backend, frontend, scripts, memory, etc.) preserving .env",
+    "status": "completed"
+  },
+  {
+    "content": "Create backend .env with required secrets (JWT_SECRET, EXT_SHARED_SECRET, EMERGENT_LLM_KEY, CORS_ORIGINS, PUBLIC_SITE_URL)",
+    "status": "completed"
+  },
+  {
+    "content": "Install backend Python dependencies",
+    "status": "completed"
+  },
+  {
+    "content": "Install frontend Node dependencies via yarn",
+    "status": "completed"
+  },
+  {
+    "content": "Restart backend and frontend, verify services running",
+    "status": "completed"
+  },
+  {
+    "content": "Verify backend API healthy (/api/health, /api/public/vehicles, login)",
+    "status": "completed"
+  },
+  {
+    "content": "Verify frontend serves home/login page (preview URL)",
+    "status": "completed"
+  }
+]
