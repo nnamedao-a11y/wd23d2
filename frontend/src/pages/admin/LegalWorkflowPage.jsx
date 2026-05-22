@@ -23,6 +23,7 @@ import {
 } from '@phosphor-icons/react';
 import CalculationsTab from '../../components/crm/calculations/CalculationsTab';
 import WhiteSelect from '../../components/ui/WhiteSelect';
+import SectionTabs, { OptionPillGroup } from '../../components/ui/SectionTabs';
 
 import { useLang } from '../../i18n';
 // ──────────────────────── STATIC HELPERS ─────────────────────────
@@ -149,25 +150,15 @@ export default function LegalWorkflowPage() {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-2 border-b border-[#E4E4E7] overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0" role="tablist">
-        {tabs.map(tab2 => (
-          <button
-            key={tab2.id}
-            role="tab"
-            onClick={() => setTab(tab2.id)}
-            data-testid={`legal-tab-${tab2.id}`}
-            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
-              tab === tab2.id
-                ? 'text-[#4F46E5] border-b-2 border-[#4F46E5]'
-                : 'text-[#71717A] hover:text-[#18181B]'
-            }`}
-          >
-            <tab2.icon size={18} weight="duotone" />
-            {tab2.label}
-          </button>
-        ))}
-      </div>
+      {/* Tabs — unified black-outline standard */}
+      <SectionTabs
+        tabs={tabs.map((t2) => ({ id: t2.id, label: t2.label, icon: t2.icon }))}
+        activeId={tab}
+        onChange={setTab}
+        testIdPrefix="legal-tab"
+        ariaLabel="Legal workflow sections"
+        className="-mx-1 sm:mx-0"
+      />
 
       <div className="min-h-[500px]">
         {tab === 'customer_legal' && (
@@ -1439,19 +1430,16 @@ function ContractV2Tab({ customers, deals, catalog }) {
           <span>{t('adm_create_contract_v2')}</span>
         </div>
         <div className="space-y-4">
-          <div className="grid grid-cols-3 gap-3">
-            {(catalog?.contract_types || ['deposit','final','purchase']).map(t => (
-              <button key={t} onClick={() => setType(t)}
-                      data-testid={`ctype-${t}`}
-                      className={`px-3 py-2 rounded-lg text-sm font-semibold border-2 transition-colors ${
-                        type === t
-                          ? 'border-[#4F46E5] bg-[#E0E7FF] text-[#4F46E5]'
-                          : 'border-[#E4E4E7] bg-white text-[#71717A] hover:border-[#4F46E5]/40'
-                      }`}>
-                {t.toUpperCase()}
-              </button>
-            ))}
-          </div>
+          <OptionPillGroup
+            options={(catalog?.contract_types || ['deposit', 'final', 'purchase']).map((ct) => ({
+              value: ct,
+              label: ct.toUpperCase(),
+            }))}
+            value={type}
+            onChange={setType}
+            testIdPrefix="ctype"
+            ariaLabel="Contract type"
+          />
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-[#71717A] mb-2">{t('adm_customer')}</label>
             <WhiteSelect

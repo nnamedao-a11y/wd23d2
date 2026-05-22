@@ -24,6 +24,7 @@ import AuthSettingsPage from './AuthSettingsPage';
 import EmailOutboxPage from './EmailOutboxPage';
 
 import { useLang } from '../../i18n';
+import SectionTabs from '../../components/ui/SectionTabs';
 
 const TABS = [
   { id: 'general', label: 'General',      icon: Wrench },
@@ -69,35 +70,15 @@ export default function SystemPage() {
             </div>
           </div>
 
-          {/* ────────────── Tabs (segmented control) ────────────── */}
-          <div
-            className="mt-5 inline-flex p-1 bg-[#F4F4F5] border border-[#E4E4E7] rounded-xl gap-1 w-full sm:w-auto overflow-x-auto"
-            role="tablist"
-            aria-label="System sections"
-          >
-            {TABS.map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setTab(tab.id)}
-                  data-testid={`system-tab-${tab.id}`}
-                  className={[
-                    'inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-[12.5px] sm:text-[13px] rounded-lg whitespace-nowrap shrink-0 transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10',
-                    isActive
-                      ? 'bg-[#18181B] text-white font-semibold shadow-sm'
-                      : 'text-[#52525B] hover:text-[#18181B] font-medium',
-                  ].join(' ')}
-                >
-                  <Icon size={14} weight={isActive ? 'fill' : 'regular'} />
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
+          {/* ────────────── Tabs (unified) ────────────── */}
+          <div className="mt-5">
+            <SectionTabs
+              tabs={TABS}
+              activeId={activeTab}
+              onChange={setTab}
+              testIdPrefix="system-tab"
+              ariaLabel="System sections"
+            />
           </div>
         </div>
       </div>

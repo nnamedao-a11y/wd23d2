@@ -1777,22 +1777,13 @@ const ParserControl = () => {
       )}
 
       <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full space-y-6">
-        {/* Larger, more prominent tab bar — these are SECTION HEADERS for
-            the page, not utility chips. Active tab gets the standard black
-            pill (matches sidebar active item) so they read as real headings. */}
-        <TabsList className="inline-flex h-auto p-1 bg-[#FAFAFA] border border-[#E4E4E7] rounded-xl gap-1">
-          <TabsTrigger
-            value="overview"
-            data-testid="tab-overview"
-            className="px-3.5 sm:px-5 py-2 sm:py-2.5 text-[13px] sm:text-[14px] font-semibold rounded-lg data-[state=active]:bg-[#18181B] data-[state=active]:text-white text-[#3F3F46] hover:text-[#18181B] transition-colors"
-          >
+        {/* Tabs — inherit the platform's canonical black-outline language
+            from `<TabsList>/<TabsTrigger>` (see /components/ui/tabs.jsx). */}
+        <TabsList>
+          <TabsTrigger value="overview" data-testid="tab-overview">
             {t('adm_overview_2')}
           </TabsTrigger>
-          <TabsTrigger
-            value="extension"
-            data-testid="tab-extension"
-            className="px-3.5 sm:px-5 py-2 sm:py-2.5 text-[13px] sm:text-[14px] font-semibold rounded-lg data-[state=active]:bg-[#18181B] data-[state=active]:text-white text-[#3F3F46] hover:text-[#18181B] transition-colors"
-          >
+          <TabsTrigger value="extension" data-testid="tab-extension">
             {t('adm_chrome_extension')}
           </TabsTrigger>
         </TabsList>

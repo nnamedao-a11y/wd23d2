@@ -245,43 +245,53 @@ export default function TrackingLayout() {
         )}
       </div>
 
-      {/* ── Sub-nav tabs — flat secondary nav consistent with admin UI ── */}
-      <div className="bg-white border border-[#E4E4E7] rounded-2xl">
-        <nav
-          data-testid="tracking-tabs"
-          className="flex items-stretch gap-0 px-2 overflow-x-auto"
-        >
-          {TABS.map((tab) => {
-            const Icon = tab.icon;
-            const showBadge = tab.badgeKey === 'automationExceptions' && automationCount > 0;
-            return (
-              <NavLink
-                key={tab.to}
-                to={tab.to}
-                data-testid={tab.testid}
-                title={tab.sub}
-                className={({ isActive }) => `
-                  flex items-center gap-2 px-4 py-3 whitespace-nowrap text-[13px]
-                  border-b-2 transition-colors
-                  ${isActive
-                    ? 'border-[#18181B] text-[#18181B] font-semibold'
-                    : 'border-transparent text-[#71717A] hover:text-[#18181B] font-medium'}
-                `}
-              >
-                <Icon size={16} weight="duotone" />
-                <span>{tab.label}</span>
-                {showBadge && (
-                  <span
-                    data-testid={`${tab.testid}-badge`}
-                    className="ml-1 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1.5 rounded-full bg-[#F59E0B] text-white text-[10.5px] font-bold leading-none"
-                  >
-                    {automationCount}
-                  </span>
-                )}
-              </NavLink>
-            );
-          })}
-        </nav>
+      {/* ── Sub-nav tabs — unified black-outline standard ── */}
+      <div
+        className="inline-flex p-1 bg-[#FAFAFA] border border-[#E4E4E7] rounded-xl gap-1 max-w-full overflow-x-auto"
+        style={{ scrollbarWidth: 'none' }}
+        role="tablist"
+        aria-label="Tracking sections"
+        data-testid="tracking-tabs"
+      >
+        {TABS.map((tab) => {
+          const Icon = tab.icon;
+          const showBadge = tab.badgeKey === 'automationExceptions' && automationCount > 0;
+          return (
+            <NavLink
+              key={tab.to}
+              to={tab.to}
+              data-testid={tab.testid}
+              title={tab.sub}
+              role="tab"
+              className={({ isActive }) =>
+                [
+                  'inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-lg text-[12.5px] sm:text-[13px] whitespace-nowrap shrink-0 transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10',
+                  isActive
+                    ? 'bg-white text-[#18181B] font-semibold shadow-[0_0_0_1.5px_#18181B]'
+                    : 'bg-transparent text-[#52525B] hover:text-[#18181B] font-medium',
+                ].join(' ')
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <Icon size={14} weight={isActive ? 'fill' : 'regular'} />
+                  <span>{tab.label}</span>
+                  {showBadge && (
+                    <span
+                      data-testid={`${tab.testid}-badge`}
+                      className={[
+                        'ml-0.5 inline-flex items-center justify-center min-w-[16px] h-[16px] px-1 rounded-full text-[10px] font-semibold',
+                        isActive ? 'bg-[#18181B] text-white' : 'bg-[#F59E0B] text-white',
+                      ].join(' ')}
+                    >
+                      {automationCount}
+                    </span>
+                  )}
+                </>
+              )}
+            </NavLink>
+          );
+        })}
       </div>
 
       {/* ── Active tab content ── */}

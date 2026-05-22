@@ -20,6 +20,7 @@ import {
   X,
   CaretDown,
 } from '@phosphor-icons/react';
+import SectionTabs from '../../components/ui/SectionTabs';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -43,34 +44,15 @@ export default function AdminSettingsPage({ embedded = false }) {
         </div>
       )}
 
-      {/* Secondary segmented tabs (CRM / Security) — same visual language as
-          the parent System tabs so the page feels consistent. */}
-      <div
-        className="inline-flex p-1 bg-[#F4F4F5] border border-[#E4E4E7] rounded-xl gap-1 mb-5"
-        role="tablist"
-        aria-label="General sections"
-      >
-        {TABS.map((it) => {
-          const active = tab === it.id;
-          return (
-            <button
-              key={it.id}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              onClick={() => setTab(it.id)}
-              data-testid={`settings-tab-${it.id}`}
-              className={[
-                'px-3.5 py-1.5 text-[12.5px] rounded-lg whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-black/10',
-                active
-                  ? 'bg-[#18181B] text-white font-semibold'
-                  : 'text-[#52525B] hover:text-[#18181B] font-medium',
-              ].join(' ')}
-            >
-              {it.label}
-            </button>
-          );
-        })}
+      {/* Secondary tabs (CRM / Security) — same unified component */}
+      <div className="mb-5">
+        <SectionTabs
+          tabs={TABS}
+          activeId={tab}
+          onChange={setTab}
+          testIdPrefix="settings-tab"
+          ariaLabel="General sections"
+        />
       </div>
 
       {/* Content */}
