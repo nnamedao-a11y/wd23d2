@@ -189,7 +189,7 @@ const ParserLogs = () => {
                       </span>
                     </td>
                     <td className="px-6 py-3 uppercase text-sm font-medium">{log.source}</td>
-                    <td className="px-6 py-3 font-mono text-sm">{log.event}</td>
+                    <td className="px-6 py-3 text-sm">{log.event}</td>
                     <td className="px-6 py-3 text-sm max-w-xs truncate">{log.message || '-'}</td>
                     <td className="px-6 py-3">
                       {log.meta && Object.keys(log.meta).length > 0 && (
@@ -266,7 +266,7 @@ const ParserLogs = () => {
                 </div>
                 <div>
                   <p className="text-xs text-[#71717A]">{t('type')}</p>
-                  <p className="font-mono">{selectedLog.event}</p>
+                  <p className="">{selectedLog.event}</p>
                 </div>
               </div>
               {selectedLog.message && (
@@ -278,7 +278,7 @@ const ParserLogs = () => {
               {selectedLog.meta && (
                 <div>
                   <p className="text-xs text-[#71717A] mb-2">{t('adm_metadata')}</p>
-                  <pre className="bg-[#F4F4F5] p-4 rounded-xl text-sm overflow-auto font-mono">
+                  <pre className="bg-[#F4F4F5] p-4 rounded-xl text-sm overflow-auto">
                     {JSON.stringify(selectedLog.meta, null, 2)}
                   </pre>
                 </div>

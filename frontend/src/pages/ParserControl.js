@@ -611,7 +611,7 @@ const SourcesGrid = ({ sources }) => {
             {extSubsources > 0 && (
               <span className="text-[#71717A]">
                 {' '}— Cloudflare group:{' '}
-                <span className="font-mono text-[#3F3F46]">
+                <span className="font-semibold text-[#3F3F46]">
                   {extOff.subsources.join(' · ')}
                 </span>
               </span>
@@ -880,10 +880,21 @@ const OpsGuardianPanel = ({ canTest }) => {
 
   const audit = status?.recent_audit || [];
 
+  // Compact, human-readable label for each audit kind. Unknown kinds fall back
+  // to a Title-Cased version of the raw kind (so long machine names like
+  // "alert_log_only" become a clean "Alert Log Only" instead of overflowing).
   const auditKindMeta = {
     alert_emitted: { label: 'Alert', dot: '#DC2626' },
     heal_action: { label: 'Heal', dot: '#F59E0B' },
     test_alert: { label: 'Test', dot: '#71717A' },
+    alert_log_only: { label: 'Logged', dot: '#A1A1AA' },
+  };
+  const formatKindLabel = (k) => {
+    if (!k) return 'Event';
+    if (auditKindMeta[k]) return auditKindMeta[k].label;
+    return String(k)
+      .replace(/[_-]+/g, ' ')
+      .replace(/\b\w/g, (c) => c.toUpperCase());
   };
 
   return (
@@ -940,11 +951,11 @@ const OpsGuardianPanel = ({ canTest }) => {
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#F59E0B] mt-1.5 shrink-0" />
             <p className="text-[12px] text-[#3F3F46] leading-relaxed">
               <span className="font-semibold text-[#18181B]">No external alert channels configured.</span> Set{' '}
-              <code className="bg-white border border-[#E4E4E7] px-1.5 py-0.5 rounded text-[10.5px] text-[#18181B]">TELEGRAM_BOT_TOKEN</code>{' '}
+              <span className="font-semibold text-[#18181B]">TELEGRAM_BOT_TOKEN</span>{' '}
               +{' '}
-              <code className="bg-white border border-[#E4E4E7] px-1.5 py-0.5 rounded text-[10.5px] text-[#18181B]">TELEGRAM_CHAT_ID</code>{' '}
+              <span className="font-semibold text-[#18181B]">TELEGRAM_CHAT_ID</span>{' '}
               or{' '}
-              <code className="bg-white border border-[#E4E4E7] px-1.5 py-0.5 rounded text-[10.5px] text-[#18181B]">ALERT_WEBHOOK_URL</code>{' '}
+              <span className="font-semibold text-[#18181B]">ALERT_WEBHOOK_URL</span>{' '}
               in backend env and restart to receive pages when the system degrades.
             </p>
           </div>
@@ -960,44 +971,57 @@ const OpsGuardianPanel = ({ canTest }) => {
               </p>
               <span className="text-[10.5px] text-[#A1A1AA]">tap row for details</span>
             </div>
-            <div className="rounded-xl border border-[#E4E4E7] bg-white max-h-[280px] sm:max-h-[320px] overflow-y-auto divide-y divide-[#F4F4F5]">
+            <div
+              className="rounded-xl border border-[#E4E4E7] bg-white divide-y divide-[#F4F4F5]"
+              style={{
+                maxHeight: '320px',
+                overflowY: 'auto',
+                WebkitOverflowScrolling: 'touch',
+                overscrollBehavior: 'contain',
+                touchAction: 'pan-y',
+              }}
+            >
               {audit.map((row, i) => {
                 const isExpanded = expandedAudit === i;
-                const kindMeta = auditKindMeta[row.kind] || { label: row.kind || 'Event', dot: '#A1A1AA' };
+                const kindMeta = auditKindMeta[row.kind] || { dot: '#A1A1AA' };
+                const kindLabel = formatKindLabel(row.kind);
                 const ts = row.ts ? new Date(row.ts * 1000) : null;
+                const titleText = row.title || row.action || row.fingerprint || row.message || '—';
                 return (
                   <div key={i}>
                     <button
                       type="button"
                       onClick={() => setExpandedAudit(isExpanded ? null : i)}
-                      className="w-full text-left px-3 py-2.5 flex items-center gap-2.5 hover:bg-zinc-50/60 transition-colors focus:outline-none focus-visible:bg-zinc-50"
+                      className="w-full text-left px-3 py-2.5 hover:bg-zinc-50/60 transition-colors focus:outline-none focus-visible:bg-zinc-50"
                     >
-                      <span
-                        className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0"
-                        style={{ background: kindMeta.dot }}
-                      />
-                      <span className="text-[11px] text-[#71717A] tabular-nums w-[60px] shrink-0">
-                        {ts
-                          ? ts.toLocaleTimeString('en-GB', {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                              second: '2-digit',
-                            })
-                          : '—'}
-                      </span>
-                      <span className="text-[10px] uppercase tracking-wider font-semibold text-[#18181B] w-[42px] shrink-0">
-                        {kindMeta.label}
-                      </span>
-                      <span className="flex-1 min-w-0 text-[12px] text-[#3F3F46] truncate">
-                        {row.title || row.action || row.fingerprint || '—'}
-                      </span>
-                      <CaretRight
-                        size={12}
-                        className={`text-[#A1A1AA] shrink-0 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
-                      />
+                      <div className="flex items-center gap-2 mb-1">
+                        <span
+                          className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0"
+                          style={{ background: kindMeta.dot || '#A1A1AA' }}
+                        />
+                        <span className="text-[10.5px] text-[#71717A] tabular-nums shrink-0">
+                          {ts
+                            ? ts.toLocaleTimeString('en-GB', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                              })
+                            : '—'}
+                        </span>
+                        <span className="text-[9.5px] uppercase tracking-wider font-semibold text-[#52525B] bg-zinc-100 rounded px-1.5 py-0.5 shrink-0">
+                          {kindLabel}
+                        </span>
+                        <CaretRight
+                          size={12}
+                          className={`text-[#A1A1AA] shrink-0 ml-auto transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+                        />
+                      </div>
+                      <div className="pl-[14px] text-[12.5px] text-[#3F3F46] leading-snug break-words line-clamp-2">
+                        {titleText}
+                      </div>
                     </button>
                     {isExpanded && (
-                      <div className="px-3 pb-3 pl-[26px] space-y-1.5 bg-zinc-50/40">
+                      <div className="px-3 pb-3 pl-[28px] space-y-1.5 bg-zinc-50/40">
                         {row.severity && (
                           <div className="flex items-baseline gap-2 text-[11.5px]">
                             <span className="text-[#71717A] w-20 shrink-0">Severity</span>
@@ -1013,7 +1037,7 @@ const OpsGuardianPanel = ({ canTest }) => {
                         {row.fingerprint && (
                           <div className="flex items-baseline gap-2 text-[11.5px]">
                             <span className="text-[#71717A] w-20 shrink-0">Fingerprint</span>
-                            <code className="text-[#18181B] text-[10.5px] break-all">{row.fingerprint}</code>
+                            <span className="text-[#18181B] text-[10.5px] break-all">{row.fingerprint}</span>
                           </div>
                         )}
                         {row.message && (
@@ -1131,7 +1155,7 @@ const DebugPanel = ({ canProbe }) => {
             placeholder="VIN (17 chars) or LOT number"
             data-testid="debug-input"
             disabled={!canProbe}
-            className="flex-1 h-11 px-3.5 py-2.5 text-sm font-mono border border-[#E4E4E7] bg-white rounded-xl text-[#18181B] focus:outline-none focus:border-[#18181B] focus-visible:ring-4 focus-visible:ring-black/10 disabled:bg-[#FAFAFA] disabled:text-[#A1A1AA] disabled:cursor-not-allowed transition-colors"
+            className="flex-1 h-11 px-3.5 py-2.5 text-sm tracking-wide border border-[#E4E4E7] bg-white rounded-xl text-[#18181B] focus:outline-none focus:border-[#18181B] focus-visible:ring-4 focus-visible:ring-black/10 disabled:bg-[#FAFAFA] disabled:text-[#A1A1AA] disabled:cursor-not-allowed transition-colors"
           />
           <button
             onClick={() => run()}
@@ -1169,9 +1193,9 @@ const DebugPanel = ({ canProbe }) => {
                 <>
                   <span className="text-xs text-[#71717A]">
                     via{' '}
-                    <code className="font-mono font-semibold text-[#18181B]">
+                    <span className="font-semibold text-[#18181B]">
                       {result.source}
-                    </code>
+                    </span>
                   </span>
                   <span className="text-xs text-[#71717A]">
                     {result.latency_ms}ms
@@ -1363,9 +1387,9 @@ const ExtensionSetupTab = () => {
                   Chrome Extension
                 </h3>
                 <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-[#71717A]">
-                  <span className="font-mono">v{info?.version || '4.1.0'}</span>
+                  <span className="font-medium">v{info?.version || '4.1.0'}</span>
                   <span className="text-[#D4D4D8]">·</span>
-                  <span className="inline-flex items-center gap-1 font-mono text-[10.5px] uppercase tracking-wider">
+                  <span className="inline-flex items-center gap-1 text-[10.5px] uppercase tracking-wider font-medium">
                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#16A34A]" />
                     Multi-source CF bypass
                   </span>
@@ -1375,7 +1399,7 @@ const ExtensionSetupTab = () => {
             <p className="mt-3 text-[12.5px] sm:text-[13px] text-[#52525B] max-w-2xl leading-relaxed">
               {t('adm3_9b55233b99')}
             </p>
-            <p className="mt-2 text-[10.5px] font-mono text-[#A1A1AA]">
+            <p className="mt-2 text-[10.5px] text-[#A1A1AA]">
               {t('r9_zip_size')}: {fmtSize(info?.file_size)}
               {info?.file_count ? ` · ${info.file_count} ${t('r9_files_label')}` : ''} · {t('r9_without_legacy')}
             </p>
@@ -1408,7 +1432,7 @@ const ExtensionSetupTab = () => {
           ))}
           <Step n={3}>
             {t('r9_open_4b8a9c')}{' '}
-            <code className="bg-zinc-100 px-1.5 py-0.5 rounded font-mono text-[11.5px] text-[#18181B]">chrome://extensions/</code>{' '}
+            <span className="bg-zinc-100 px-1.5 py-0.5 rounded text-[11.5px] text-[#18181B] font-medium">chrome://extensions/</span>{' '}
             {t('r9_in_chrome_1f2c3d')}
           </Step>
           <Step n={4}>
@@ -1435,7 +1459,7 @@ const ExtensionSetupTab = () => {
                   copyLabel={t('adm_backend_url_copied')}
                   CopyBtn={CopyBtn}
                 >
-                  <code className="flex-1 min-w-0 bg-white border border-[#E4E4E7] px-2.5 py-1.5 rounded-lg font-mono text-[11px] text-[#71717A] truncate" title={backendUrl}>
+                  <code className="flex-1 min-w-0 bg-white border border-[#E4E4E7] px-2.5 py-1.5 rounded-lg text-[11px] text-[#71717A] truncate" title={backendUrl}>
                     auto-detected · {new URL(backendUrl).host}
                   </code>
                 </KeyRow>
@@ -1445,7 +1469,7 @@ const ExtensionSetupTab = () => {
                   label={t('adm_client_label')}
                   CopyBtn={CopyBtn}
                 >
-                  <code className="flex-1 min-w-0 bg-white border border-[#E4E4E7] px-2.5 py-1.5 rounded-lg font-mono text-[11.5px] text-[#A1A1AA]">
+                  <code className="flex-1 min-w-0 bg-white border border-[#E4E4E7] px-2.5 py-1.5 rounded-lg text-[11.5px] text-[#A1A1AA]">
                     owner-laptop
                   </code>
                   <span className="text-[10.5px] text-[#A1A1AA] shrink-0 hidden sm:inline">
@@ -1458,7 +1482,7 @@ const ExtensionSetupTab = () => {
                   {info?.hmac_secret ? (
                     <>
                       <code
-                        className="flex-1 min-w-0 bg-white border border-[#E4E4E7] px-2.5 py-1.5 rounded-lg font-mono text-[11px] text-[#18181B] break-all"
+                        className="flex-1 min-w-0 bg-white border border-[#E4E4E7] px-2.5 py-1.5 rounded-lg text-[11px] text-[#18181B] break-all tracking-wide"
                         data-testid="hmac-secret-value"
                       >
                         {info.hmac_secret}
@@ -1477,7 +1501,7 @@ const ExtensionSetupTab = () => {
 
           <Step n={8}>
             {t('adm_click')} <strong className="font-semibold text-[#18181B]">{t('adm_save_2')}</strong> {t('adm3_9f23a06622')}
-            <code className="bg-zinc-100 px-1 rounded font-mono text-[11.5px] text-[#18181B]">/api/ext/register</code>{t('adm3_9d689ddf04')}
+            <span className="bg-zinc-100 px-1 rounded text-[11.5px] text-[#18181B] font-medium">/api/ext/register</span>{t('adm3_9d689ddf04')}
           </Step>
         </ol>
 
@@ -1510,7 +1534,7 @@ const ExtensionSetupTab = () => {
               <span className="flex-1 text-[13px] sm:text-sm font-medium text-[#18181B] truncate" title={s.label}>
                 {s.label}
               </span>
-              <span className="text-[9.5px] font-mono text-[#71717A] bg-zinc-50 border border-[#E4E4E7] px-1.5 py-0.5 rounded shrink-0 whitespace-nowrap tracking-wider">
+              <span className="text-[9.5px] text-[#71717A] bg-zinc-50 border border-[#E4E4E7] px-1.5 py-0.5 rounded shrink-0 whitespace-nowrap tracking-wider font-semibold uppercase">
                 {s.role}
               </span>
             </div>
@@ -1535,13 +1559,13 @@ const ExtensionSetupTab = () => {
           <Issue n={2} title={t('adm_2_in_status_above_0_clients')}>
             <li>
               {t('adm_the_hmac_secret_in_the_popup_must_exactly_match_th')}{' '}
-              <code className="bg-zinc-100 px-1 rounded font-mono text-[10.5px] text-[#18181B]">EXT_SHARED_SECRET</code>{' '}
+              <span className="bg-zinc-100 px-1 rounded text-[10.5px] text-[#18181B] font-medium">EXT_SHARED_SECRET</span>{' '}
               {t('adm2_22842a6c50')}{' '}
-              <code className="bg-zinc-100 px-1 rounded font-mono text-[10.5px] text-[#18181B]">{t('adm_backendenv')}</code>.
+              <span className="bg-zinc-100 px-1 rounded text-[10.5px] text-[#18181B] font-medium">{t('adm_backendenv')}</span>.
             </li>
             <li>
               {t('adm_in_the_network_tab_background_pages_must_post_to')}{' '}
-              <code className="bg-zinc-100 px-1 rounded font-mono text-[10.5px] text-[#18181B]">/api/ext/heartbeat</code>{' '}
+              <span className="bg-zinc-100 px-1 rounded text-[10.5px] text-[#18181B] font-medium">/api/ext/heartbeat</span>{' '}
               {t('adm2_60_200_ok_39dbe1ae6b')}
             </li>
           </Issue>
@@ -1551,9 +1575,9 @@ const ExtensionSetupTab = () => {
           <Issue n={4} title={t('adm_4_410_gone_on_old_endpoints')}>
             <li className="list-none -ml-4">
               {t('r9_not_error_v4_legacy_8e7f6a')}{' '}
-              <code className="bg-zinc-100 px-1 rounded font-mono text-[10.5px] text-[#18181B]">/api/copart/*</code>,{' '}
-              <code className="bg-zinc-100 px-1 rounded font-mono text-[10.5px] text-[#18181B]">/api/bidcars/*</code>,{' '}
-              <code className="bg-zinc-100 px-1 rounded font-mono text-[10.5px] text-[#18181B]">/api/carfast/*</code>{' '}
+              <span className="bg-zinc-100 px-1 rounded text-[10.5px] text-[#18181B] font-medium">/api/copart/*</span>,{' '}
+              <span className="bg-zinc-100 px-1 rounded text-[10.5px] text-[#18181B] font-medium">/api/bidcars/*</span>,{' '}
+              <span className="bg-zinc-100 px-1 rounded text-[10.5px] text-[#18181B] font-medium">/api/carfast/*</span>{' '}
               {t('adm_return_json_410_gone_so_old_clients_explicitly_see')}
             </li>
           </Issue>
@@ -1794,7 +1818,7 @@ const ParserControl = () => {
                   the master_admin role (ops guard).
                 </p>
               </div>
-              <span className="hidden sm:inline-block text-[10px] font-mono uppercase tracking-wider bg-[#FAFAFA] px-2 py-0.5 rounded border border-[#E4E4E7] text-[#71717A]">
+              <span className="hidden sm:inline-block text-[10px] uppercase tracking-wider bg-[#FAFAFA] px-2 py-0.5 rounded border border-[#E4E4E7] text-[#71717A] font-semibold">
                 role: {role || 'unknown'}
               </span>
             </div>

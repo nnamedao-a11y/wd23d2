@@ -408,7 +408,7 @@ const ProxySettings = () => {
                 return (
                   <tr key={proxy.id} className="hover:bg-[#FAFAFA] transition-colors">
                     <td className="px-6 py-4">
-                      <span className="text-sm font-mono text-[#18181B]">#{proxy.id}</span>
+                      <span className="text-sm text-[#18181B]">#{proxy.id}</span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col">
