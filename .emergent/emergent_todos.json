@@ -1,34 +1,22 @@
 [
   {
-    "content": "Backup current /app .env files (MONGO_URL, REACT_APP_BACKEND_URL)",
+    "content": "Redesign SystemPage header & tabs (clean segmented control, consistent palette, no thick yellow border)",
     "status": "completed"
   },
   {
-    "content": "Copy repo files into /app (backend, frontend, scripts, memory, etc.) preserving .env",
+    "content": "AdminSettingsPage (General/CRM): convert Lead-status & Deal-status chip palettes into compact collapsible dropdown lists",
     "status": "completed"
   },
   {
-    "content": "Create backend .env with required secrets (JWT_SECRET, EXT_SHARED_SECRET, EMERGENT_LLM_KEY, CORS_ORIGINS, PUBLIC_SITE_URL)",
+    "content": "AuthSettingsPage: recompose effective-values panel (denser, no double palette), tighten block spacing, consistent palette",
     "status": "completed"
   },
   {
-    "content": "Install backend Python dependencies",
+    "content": "EmailOutboxPage: flatten triple-nested cards (provider banner + filter card + table card) into one unified panel",
     "status": "completed"
   },
   {
-    "content": "Install frontend Node dependencies via yarn",
-    "status": "completed"
-  },
-  {
-    "content": "Restart backend and frontend, verify services running",
-    "status": "completed"
-  },
-  {
-    "content": "Verify backend API healthy (/api/health, /api/public/vehicles, login)",
-    "status": "completed"
-  },
-  {
-    "content": "Verify frontend serves home/login page (preview URL)",
+    "content": "Verify build and screenshot all 3 tabs on mobile + desktop",
     "status": "completed"
   }
 ]
